@@ -1,4 +1,5 @@
-
+install: #poetry install
+	poetry install;
 
 build:
 	poetry build;
