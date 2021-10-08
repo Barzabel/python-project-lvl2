@@ -1,5 +1,4 @@
 import json
-import os
 from pathlib import Path
 
 
@@ -31,7 +30,3 @@ def generate_diff(path1, path2):
             res += f"\n  + {x}: {data2[x]}"
     res += "\n}"
     return res
-
-
-
-

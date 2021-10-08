@@ -13,6 +13,7 @@ pathlib = "^1.0.1"
 
 [tool.poetry.dev-dependencies]
 argparse = "^1.4.0"
+flake8 = "^3.9.2"
 
 [tool.poetry.scripts]
 gendiff = "gendiff.scripts.gendiff:main"
