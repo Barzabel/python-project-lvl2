@@ -17,14 +17,12 @@ def get_dict_from_path(path1, path2):
         with open(get_path(path2), "r") as read_file:
             data2 = json.load(read_file)
         return data1, data2
-    elif format_file == 'yml' or format_file =='yaml':
+    elif format_file == 'yml' or format_file == 'yaml':
         with open(get_path(path1), "r") as read_file:
             data1 = yaml.safe_load(read_file)
         with open(get_path(path2), "r") as read_file:
             data2 = yaml.safe_load(read_file)
         return data1, data2
-
-
 
 
 def generate_diff(path1, path2):
