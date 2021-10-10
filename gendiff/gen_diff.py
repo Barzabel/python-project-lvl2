@@ -20,16 +20,13 @@ def generate_diff(path1, path2):
     for x in keys:
         if x in data1 and x in data2:
             if data1[x] == data2[x]:
-                res += "\n    {}: {}".format(x,data1[x])
+                res += "\n    {}: {}".format(x, data1[x])
             else:
-                res += "\n  - {}: {}".format(x,data1[x])
-                res += "\n  + {}: {}".format(x,data2[x])
+                res += "\n  - {}: {}".format(x, data1[x])
+                res += "\n  + {}: {}".format(x, data2[x])
         elif x in data1 and x not in data2:
-            res += "\n  - {}: {}".format(x,data1[x])
+            res += "\n  - {}: {}".format(x, data1[x])
         elif x not in data1 and x in data2:
-            res += "\n  + {}: {}".format(x,data2[x])
+            res += "\n  + {}: {}".format(x, data2[x])
     res += "\n}"
     return res
-
-
-
