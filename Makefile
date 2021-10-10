@@ -15,5 +15,8 @@ package-upgrade:
 	python3.9 -m pip install --upgrade --user dist/hexlet_code-0.1.0-py3-none-any.whl;
 
 
-make lint:
+lint:
 	poetry run flake8 gendiff;
+
+all_tests:
+	poetry run pytest;
