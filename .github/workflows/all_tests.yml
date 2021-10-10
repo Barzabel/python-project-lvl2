@@ -19,9 +19,6 @@
        - name: Run linter
          run: |
            make lint
-       - name: Test_lint
-         run: |
-           make lint
-      - name: Test_json
+       - name: Test_json
          run: |
            make all_tests
