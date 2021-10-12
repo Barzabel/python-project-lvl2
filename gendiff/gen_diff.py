@@ -1,22 +1,86 @@
 from .file_parser import get_dict_from_path
+from .stylish import stylish
 
 
-def generate_diff(path1, path2):
-    data1, data2 = get_dict_from_path(path1, path2)
+def _rec_diff2(data1, data2):
     keys = set(data1.keys()) | set(data2.keys())
     keys = list(keys)
     keys.sort()
-    res = "{"
+    res = []
     for x in keys:
         if x in data1 and x in data2:
             if data1[x] == data2[x]:
-                res += "\n    {}: {}".format(x, data1[x])
+                if type(data1[x]) == dict:
+                    res.append({
+                        "status": 0,
+                        "key": x,
+                        "value": _rec_diff2(data1[x], data2[x])
+                        })
+                else:
+                    res.append({
+                        "status": 0,
+                        "key": x,
+                        "value": data1[x]
+                        })
             else:
-                res += "\n  - {}: {}".format(x, data1[x])
-                res += "\n  + {}: {}".format(x, data2[x])
+                if type(data1[x]) == dict and type(data2[x]) != dict:
+                    res.append({
+                        "status": -1,
+                        "key": x,
+                        "value": _rec_diff2(data1[x], data1[x])
+                        })
+                elif type(data1[x]) != dict and type(data2[x]) == dict:
+                    res.append({
+                        "status": +1,
+                        "key": x,
+                        "value": _rec_diff2(data2[x], data2[x])
+                        })
+                elif type(data1[x]) == dict and type(data2[x]) == dict:
+                    res.append({
+                        "status": 0,
+                        "key": x,
+                        "value": _rec_diff2(data1[x], data2[x])
+                        })
+                else:
+                    res.append({
+                        "status": -1,
+                        "key": x,
+                        "value": data1[x]
+                        })
+                    res.append({
+                        "status": 1,
+                        "key": x,
+                        "value": data2[x]
+                        })
         elif x in data1 and x not in data2:
-            res += "\n  - {}: {}".format(x, data1[x])
+            if type(data1[x]) == dict:
+                res.append({
+                    "status": -1,
+                    "key": x,
+                    "value": _rec_diff2(data1[x], data1[x])
+                    })
+            else:
+                res.append({
+                    "status": -1,
+                    "key": x,
+                    "value": data1[x]
+                    })
         elif x not in data1 and x in data2:
-            res += "\n  + {}: {}".format(x, data2[x])
-    res += "\n}"
+            if type(data2[x]) == dict:
+                res.append({
+                    "status": +1,
+                    "key": x,
+                    "value": _rec_diff2(data2[x], data2[x])
+                    })
+            else:
+                res.append({
+                    "status": 1,
+                    "key": x,
+                    "value": data2[x]
+                    })
     return res
+
+
+def generate_diff(path1, path2, formator=stylish):
+    data1, data2 = get_dict_from_path(path1, path2)
+    return formator(_rec_diff2(data1, data2))
