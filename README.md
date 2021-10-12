@@ -8,3 +8,7 @@
  
 презентация работы gendiff
 [![asciicast](https://asciinema.org/a/440531.png )](https://asciinema.org/a/440531)
+
+работа библиотеки с вложенными структурами
+[![asciicast](https://asciinema.org/a/441629.png )](https://asciinema.org/a/441629)
+
