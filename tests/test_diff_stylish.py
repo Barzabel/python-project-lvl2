@@ -9,7 +9,7 @@ def result():
 
 @pytest.fixture
 def result_for_deap():
-    with open('tests/fixtures/right_answer', "r") as read_file:
+    with open('tests/fixtures/right_answer_stylish', "r") as read_file:
         return read_file.read()
 
 

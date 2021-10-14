@@ -1,0 +1,5 @@
+dist/
+dist/*
+dist/hexlet_code-0.1.0-py3-none-any.whl
+dist/hexlet_code-0.1.0.tar.gz
+__pycache__/

@@ -29,7 +29,18 @@ def _rec_diff2(data1, data2):
                         "key": x,
                         "value": _rec_diff2(data1[x], data1[x])
                         })
+                    res.append({
+                        "status": +1,
+                        "key": x,
+                        "value": data2[x]
+                        })
+
                 elif type(data1[x]) != dict and type(data2[x]) == dict:
+                    res.append({
+                        "status": -1,
+                        "key": x,
+                        "value": data1[x]
+                        })
                     res.append({
                         "status": +1,
                         "key": x,
