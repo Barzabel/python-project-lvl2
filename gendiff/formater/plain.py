@@ -56,5 +56,4 @@ def plain(data):
             new_data[x + 1]['status'] = None
         elif new_data[x]["status"] == -1:
             res += "\nProperty '{}' was removed".format(new_data[x]['key'])
-    print(res)
     return res

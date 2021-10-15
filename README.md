@@ -12,3 +12,5 @@
 работа библиотеки с вложенными структурами
 [![asciicast](https://asciinema.org/a/441629.png )](https://asciinema.org/a/441629)
 
+работа библиотеки с разными форматами вывода
+[![asciicast](https://asciinema.org/a/442450.png )](https://asciinema.org/a/442450)
