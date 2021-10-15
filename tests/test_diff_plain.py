@@ -1,6 +1,6 @@
 import pytest
 from gendiff.gen_diff import generate_diff
-from gendiff.stylish import plain
+
 
 @pytest.fixture
 def result_for_deap():
@@ -9,7 +9,8 @@ def result_for_deap():
 
 
 def test_json():
-    assert generate_diff('tests/fixtures/file_deap1.json', 'tests/fixtures/file_deap1.json', plain) == ''
+    assert generate_diff('tests/fixtures/file_deap1.json', 'tests/fixtures/file_deap1.json', "plain") == ''
+
 
 def test_json(result_for_deap):
-    assert generate_diff('tests/fixtures/file_deap1.json', 'tests/fixtures/file_deap2.json', plain) == result_for_deap
+    assert generate_diff('tests/fixtures/file_deap1.json', 'tests/fixtures/file_deap2.json', "plain") == result_for_deap

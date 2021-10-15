@@ -1,17 +1,6 @@
 import copy
 
 
-def serialize_value_json(value):
-    if type(value) == bool:
-        if value:
-            value = 'true'
-        else:
-            value = 'false'
-    elif value is None:
-        value = 'null'
-    return value
-
-
 def serialize_value_plain(value):
     if type(value) == bool:
         if value:
@@ -23,25 +12,6 @@ def serialize_value_plain(value):
     elif value is None:
         value = 'null'
     return value
-
-
-def stylish(data, deap=""):
-    res = "{"
-    for x in data:
-        if type(x["value"]) == list:
-            new_deap = "    " + deap
-            value = stylish(x["value"], new_deap)
-        else:
-            value = serialize_value_json(x["value"])
-        if x["status"] == 0:
-            res += "\n{}    {}: {}".format(deap, x['key'], value)
-        elif x["status"] == 1:
-            res += "\n{}  + {}: {}".format(deap, x['key'], value)
-        elif x["status"] == -1:
-            res += "\n{}  - {}: {}".format(deap, x['key'], value)
-    end = "\n" + deap + "}"
-    res += end
-    return res
 
 
 def _recurs_for_key(data, parent):
@@ -86,4 +56,5 @@ def plain(data):
             new_data[x + 1]['status'] = None
         elif new_data[x]["status"] == -1:
             res += "\nProperty '{}' was removed".format(new_data[x]['key'])
+    print(res)
     return res
