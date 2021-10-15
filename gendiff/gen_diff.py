@@ -2,6 +2,7 @@ from .file_parser import get_dict_from_path
 from .formater.plain import plain
 from .formater.stylish import stylish
 
+
 def _rec_diff2(data1, data2):
     keys = set(data1.keys()) | set(data2.keys())
     keys = list(keys)
@@ -98,5 +99,3 @@ def generate_diff(path1, path2, formator="stylish"):
         return stylish(_rec_diff2(data1, data2))
     elif formator == 'plain':
         return plain(_rec_diff2(data1, data2))
-
-    

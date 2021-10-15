@@ -1,6 +1,3 @@
-import copy
-
-
 def serialize_value_json(value):
     if type(value) == bool:
         if value:
