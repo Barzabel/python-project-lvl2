@@ -13,6 +13,6 @@ def test_json():
     assert generate_diff('tests/fixtures/file_deap1.json', 'tests/fixtures/file_deap1.json', "json") == ''
 
 
-def test_json(result_for_deap):
+def test_json_plain(result_for_deap):
     res = generate_diff('tests/fixtures/file_deap1.json', 'tests/fixtures/file_deap2.json', "json")
     assert res == '{0}\n'.format(json.dumps(result_for_deap, indent=4))
