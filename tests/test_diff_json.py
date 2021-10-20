@@ -2,6 +2,7 @@ import pytest
 import json
 from gendiff.gendiff import generate_diff
 
+
 @pytest.fixture
 def result_for_deap():
     with open('tests/fixtures/right_answer_json.json', "r") as read_file:
