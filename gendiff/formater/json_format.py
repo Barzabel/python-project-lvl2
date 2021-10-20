@@ -1,0 +1,64 @@
+import json
+import copy
+
+
+def serialize_value_plain(value):
+    if type(value) == bool:
+        if value:
+            value = 'true'
+        else:
+            value = 'false'
+    elif type(value) == str and value != '[complex value]':
+        value = "'{}'".format(value)
+    elif value is None:
+        value = 'null'
+    return value
+
+
+def _recurs_for_key(data, parent):
+    new_data = []
+    for x in data:
+        if type(x["value"]) == list and x['status'] == 0:
+            if parent != '':
+                new_parent = "{}.{}".format(parent, x["key"])
+            else:
+                new_parent = x["key"]
+            for y in _recurs_for_key(x["value"], new_parent):
+                new_data.append(y)
+        elif type(x["value"]) == list and (x['status'] != 0):
+            value = copy.copy(x)
+            if parent != "":
+                value["key"] = "{}.{}".format(parent, x["key"])
+            value["value"] = '[complex value]'
+            new_data.append(value)
+        else:
+            value = copy.copy(x)
+            if parent != "":
+                value["key"] = "{}.{}".format(parent, x["key"])
+            new_data.append(value)
+    return new_data
+
+
+def json_formatter(data):
+    new_data = _recurs_for_key(data, '')
+    res = {
+    	"added":[],
+    	"updated_to":[],
+    	"removed":[]
+    }
+
+    for x in range(len(new_data)):
+        value = serialize_value_plain(new_data[x]['value'])
+        status = new_data[x]["status"]
+        if new_data[x]["status"] == 1:
+            key = new_data[x]['key']
+            res.get("added").append({key: value}) 
+        elif status == -1 and new_data[x]['key'] == new_data[x + 1]['key']:
+            v_next = serialize_value_plain(new_data[x + 1]['value'])
+            key = new_data[x]['key']
+            res.get("updated_to").append({key: v_next})
+            new_data[x + 1]['status'] = None
+        elif new_data[x]["status"] == -1:
+            key = new_data[x]['key']
+            res.get("removed").append({key: value}) 
+    return '{0}\n'.format(json.dumps(res, indent=4))

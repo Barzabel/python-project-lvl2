@@ -1,6 +1,7 @@
 from .file_parser import get_dict_from_path
 from .formater.plain import plain
 from .formater.stylish import stylish
+from .formater.json_format import json_formatter
 
 
 def _rec_diff2(data1, data2):
@@ -99,3 +100,5 @@ def generate_diff(path1, path2, formator="stylish"):
         return stylish(_rec_diff2(data1, data2))
     elif formator == 'plain':
         return plain(_rec_diff2(data1, data2))
+    elif formator == 'json':
+        return json_formatter(_rec_diff2(data1, data2))
