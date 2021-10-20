@@ -1,5 +1,5 @@
 import pytest
-from gendiff.gen_diff import generate_diff
+from gendiff.generate_diff import generate_diff
 
 
 @pytest.fixture
