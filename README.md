@@ -14,3 +14,6 @@
 
 работа библиотеки с разными форматами вывода
 [![asciicast](https://asciinema.org/a/442450.png )](https://asciinema.org/a/442450)
+
+формат вывода json
+[![asciicast](https://asciinema.org/a/443571.png)](https://asciinema.org/a/443571)

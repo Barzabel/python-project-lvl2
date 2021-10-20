@@ -45,10 +45,11 @@ def plain(data):
         value = serialize_value_plain(new_data[x]['value'])
         status = new_data[x]["status"]
         key = new_data[x]['key']
+        is_end = x < len(new_data) - 1
         if new_data[x]["status"] == 1:
             line = "\nProperty '{}' was added with value: {}"
             res += line.format(key, value)
-        elif status == -1 and x < len(new_data)-1 and key == new_data[x + 1]['key']:
+        elif status == -1 and is_end and key == new_data[x + 1]['key']:
             v_next = serialize_value_plain(new_data[x + 1]['value'])
             line = "\nProperty '{}' was updated. From {} to {}"
             res += line.format(key, value, v_next)

@@ -51,10 +51,11 @@ def json_formatter(data):
         value = serialize_value_plain(new_data[x]['value'])
         status = new_data[x]["status"]
         key = new_data[x]['key']
+        is_end = x < len(new_data) - 1
         if new_data[x]["status"] == 1:
             key = new_data[x]['key']
             res.get("added").append({key: value})
-        elif status == -1 and x < len(new_data)-1 and key == new_data[x + 1]['key']:
+        elif status == -1 and is_end and key == new_data[x + 1]['key']:
             v_next = serialize_value_plain(new_data[x + 1]['value'])
             res.get("updated_to").append({key: v_next})
             new_data[x + 1]['status'] = None
