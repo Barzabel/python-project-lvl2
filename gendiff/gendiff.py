@@ -17,80 +17,80 @@ def _rec_diff2(data1, data2):
                         "status": 0,
                         "key": x,
                         "value": _rec_diff2(data1[x], data2[x])
-                        })
+                    })
                 else:
                     res.append({
                         "status": 0,
                         "key": x,
                         "value": data1[x]
-                        })
+                    })
             else:
                 if type(data1[x]) == dict and type(data2[x]) != dict:
                     res.append({
                         "status": -1,
                         "key": x,
                         "value": _rec_diff2(data1[x], data1[x])
-                        })
+                    })
                     res.append({
                         "status": +1,
                         "key": x,
                         "value": data2[x]
-                        })
+                    })
 
                 elif type(data1[x]) != dict and type(data2[x]) == dict:
                     res.append({
                         "status": -1,
                         "key": x,
                         "value": data1[x]
-                        })
+                    })
                     res.append({
                         "status": +1,
                         "key": x,
                         "value": _rec_diff2(data2[x], data2[x])
-                        })
+                    })
                 elif type(data1[x]) == dict and type(data2[x]) == dict:
                     res.append({
                         "status": 0,
                         "key": x,
                         "value": _rec_diff2(data1[x], data2[x])
-                        })
+                    })
                 else:
                     res.append({
                         "status": -1,
                         "key": x,
                         "value": data1[x]
-                        })
+                    })
                     res.append({
                         "status": 1,
                         "key": x,
                         "value": data2[x]
-                        })
+                    })
         elif x in data1 and x not in data2:
             if type(data1[x]) == dict:
                 res.append({
                     "status": -1,
                     "key": x,
                     "value": _rec_diff2(data1[x], data1[x])
-                    })
+                })
             else:
                 res.append({
                     "status": -1,
                     "key": x,
                     "value": data1[x]
-                    })
+                })
         elif x not in data1 and x in data2:
             if type(data2[x]) == dict:
                 res.append({
                     "status": +1,
                     "key": x,
                     "value": _rec_diff2(data2[x], data2[x])
-                    })
+                })
             else:
                 res.append({
                     "status": 1,
                     "key": x,
                     "value": data2[x]
-                    })
+                })
     return res
 
 
