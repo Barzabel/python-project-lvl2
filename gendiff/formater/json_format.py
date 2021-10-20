@@ -42,9 +42,9 @@ def _recurs_for_key(data, parent):
 def json_formatter(data):
     new_data = _recurs_for_key(data, '')
     res = {
-    	"added":[],
-    	"updated_to":[],
-    	"removed":[]
+        "added": [],
+        "updated_to": [],
+        "removed": []
     }
 
     for x in range(len(new_data)):
@@ -52,7 +52,7 @@ def json_formatter(data):
         status = new_data[x]["status"]
         if new_data[x]["status"] == 1:
             key = new_data[x]['key']
-            res.get("added").append({key: value}) 
+            res.get("added").append({key: value})
         elif status == -1 and new_data[x]['key'] == new_data[x + 1]['key']:
             v_next = serialize_value_plain(new_data[x + 1]['value'])
             key = new_data[x]['key']
@@ -60,5 +60,5 @@ def json_formatter(data):
             new_data[x + 1]['status'] = None
         elif new_data[x]["status"] == -1:
             key = new_data[x]['key']
-            res.get("removed").append({key: value}) 
+            res.get("removed").append({key: value})
     return '{0}\n'.format(json.dumps(res, indent=4))
