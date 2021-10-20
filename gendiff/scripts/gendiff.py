@@ -1,6 +1,5 @@
-from ..gendiff import generate_diff
 import argparse
-
+from gendiff.gendiff import generate_diff
 
 parser = argparse.ArgumentParser(description='Generate diff')
 parser.add_argument('first_file', type=str)
