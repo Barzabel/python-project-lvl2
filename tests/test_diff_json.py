@@ -16,7 +16,7 @@ def empaty_json_format():
 
 
 def test_json(empaty_json_format):
-    res = generate_diff('tests/fixtures/file_deap1.json', 'tests/fixtures/file_deap1.json', "json") 
+    res = generate_diff('tests/fixtures/file_deap1.json', 'tests/fixtures/file_deap1.json', "json")
     assert res == '{0}\n'.format(json.dumps(empaty_json_format, indent=4))
 
 

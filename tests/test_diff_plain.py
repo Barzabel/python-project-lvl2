@@ -13,5 +13,5 @@ def test_json():
     assert generate_diff('tests/fixtures/file_deap1.json', 'tests/fixtures/file_deap1.json', "plain") == ''
 
 
-def test_json(result_for_deap):
+def test_json_deap(result_for_deap):
     assert generate_diff('tests/fixtures/file_deap1.json', 'tests/fixtures/file_deap2.json', "plain") == result_for_deap
