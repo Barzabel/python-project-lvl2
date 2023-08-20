@@ -1,5 +1,12 @@
-dist/
+*.egg-info
+__pycache__
+*.pyc
+*.gz
 dist/*
-dist/hexlet_code-0.1.0-py3-none-any.whl
-dist/hexlet_code-0.1.0.tar.gz
-__pycache__/
+.DS_Store
+.venv/
+.coverage
+coverage.xml
+.pytest_cache/
+.vim
+.idea/
