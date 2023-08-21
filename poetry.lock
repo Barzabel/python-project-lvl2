@@ -141,11 +141,11 @@ testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xm
 
 [[package]]
 name = "pyyaml"
-version = "5.4.1"
+version = "6.0.1"
 description = "YAML parser and emitter for Python"
 category = "main"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
+python-versions = ">=3.6"
 
 [[package]]
 name = "toml"
@@ -157,8 +157,8 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.8"
-content-hash = "78a8f2cf1eab6933772d60472251c71d74d855a3143dc1d4a34b7faddabf0f9e"
+python-versions = "^3.11.4"
+content-hash = "19497497237468b80f8e0152f1d26de5ae51cb0f07ea0aa89f9d12bc63712d81"
 
 [metadata.files]
 argparse = []
