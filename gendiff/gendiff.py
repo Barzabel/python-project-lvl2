@@ -10,15 +10,10 @@ def _get_dict(status, key, value):
         "key": key,
         "value": value
     }
-"""
-1 добавить статусы key
-2 длинна строчек
-3 сделать явный базовый случий для рекурсивной функции *
 
-"""
 
 def _rdiff(data1, data2):
-    if type(data2) != dict or type(data1) != dict: 
+    if type(data2) != dict or type(data1) != dict:
         return data1
 
     keys = set(data1.keys()) | set(data2.keys())
@@ -41,19 +36,16 @@ def _rdiff(data1, data2):
 
         if status == 0:
             if data1[key] == data2[key]:
-                if type(data1[key]) == dict:
-                    res.append(_get_dict(status, key, _rdiff(*value_diff)))
-                else:
-                    res.append(_get_dict(status, key, data1[key]))
+                res.append(_get_dict(status, key, _rdiff(*value_diff)))
+            elif type(data1[key]) == dict and type(data2[key]) == dict:
+                res.append(_get_dict(status, key, _rdiff(*value_diff)))
             else:
-                if type(data1[key]) == dict and type(data2[key]) == dict:
-                    res.append(_get_dict(status, key, _rdiff(*value_diff)))
-                else:
-                    res.append(_get_dict(-1, key, _rdiff(data1[key], data1[key])))
-                    res.append(_get_dict(1, key, _rdiff(data2[key], data2[key])))
+                res.append(_get_dict(-1, key, _rdiff(data1[key], data1[key])))
+                res.append(_get_dict(1, key, _rdiff(data2[key], data2[key])))
         else:
             if type(value_diff) == dict:
-                res.append(_get_dict(status, key, _rdiff(value_diff, value_diff)))
+                res.append(
+                    _get_dict(status, key, _rdiff(value_diff, value_diff)))
             else:
                 res.append(_get_dict(status, key, value_diff))
     return res
