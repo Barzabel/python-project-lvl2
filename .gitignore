@@ -1,7 +1,8 @@
 *.egg-info
-__pycache__
+__pycache__*
 *.pyc
 *.gz
+dict
 dist/*
 .DS_Store
 .venv/
