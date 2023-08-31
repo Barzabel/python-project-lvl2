@@ -1,5 +1,5 @@
 def serialize_value_json(value):
-    if type(value) == bool:
+    if isinstance(value, bool):
         if value:
             value = 'true'
         else:
@@ -12,7 +12,7 @@ def serialize_value_json(value):
 def stylish(data, deap=""):
     res = "{"
     for x in data:
-        if type(x["value"]) == list:
+        if isinstance(x["value"], list):
             new_deap = "    " + deap
             value = stylish(x["value"], new_deap)
         else:

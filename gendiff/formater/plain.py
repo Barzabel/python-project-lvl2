@@ -2,12 +2,12 @@ import copy
 
 
 def serialize_value_plain(value):
-    if type(value) == bool:
+    if isinstance(value, bool):
         if value:
             value = 'true'
         else:
             value = 'false'
-    elif type(value) == str and value != '[complex value]':
+    elif isinstance(value, str) and value != '[complex value]':
         value = "'{}'".format(value)
     elif value is None:
         value = 'null'
@@ -17,14 +17,14 @@ def serialize_value_plain(value):
 def _recurs_for_key(data, parent):
     new_data = []
     for x in data:
-        if type(x["value"]) == list and x['status'] == 0:
+        if isinstance(x["value"], list) and x['status'] == 0:
             if parent != '':
                 new_parent = "{}.{}".format(parent, x["key"])
             else:
                 new_parent = x["key"]
             for y in _recurs_for_key(x["value"], new_parent):
                 new_data.append(y)
-        elif type(x["value"]) == list and (x['status'] != 0):
+        elif isinstance(x["value"], list) and (x['status'] != 0):
             value = copy.copy(x)
             if parent != "":
                 value["key"] = "{}.{}".format(parent, x["key"])
