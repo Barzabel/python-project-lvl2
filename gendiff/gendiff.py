@@ -52,7 +52,8 @@ def _rdiff(data1, data2):
 
 
 def generate_diff(path1, path2, formator="stylish"):
-    data1, data2 = get_dict_from_path(path1, path2)
+    data1 = get_dict_from_path(path1)
+    data2 = get_dict_from_path(path2)
     if formator == 'stylish':
         return stylish(_rdiff(data1, data2))
     elif formator == 'plain':

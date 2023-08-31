@@ -9,17 +9,15 @@ def get_path(path):
     return res_path
 
 
-def get_dict_from_path(path1, path2):
-    format_file = path1.split('.')[-1]
+def parser_data(data, format_file='json') -> dict:
     if format_file == 'json':
-        with open(get_path(path1), "r") as read_file:
-            data1 = json.load(read_file)
-        with open(get_path(path2), "r") as read_file:
-            data2 = json.load(read_file)
-        return data1, data2
+        dict_from_data = json.load(data)
     elif format_file == 'yml' or format_file == 'yaml':
-        with open(get_path(path1), "r") as read_file:
-            data1 = yaml.safe_load(read_file)
-        with open(get_path(path2), "r") as read_file:
-            data2 = yaml.safe_load(read_file)
-        return data1, data2
+        dict_from_data = yaml.safe_load(data)
+    return dict_from_data
+
+
+def get_dict_from_path(path1):
+    format_file = path1.split('.')[-1]
+    with open(get_path(path1), "r") as data:
+        return parser_data(data, format_file)
