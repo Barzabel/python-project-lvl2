@@ -1,6 +1,6 @@
 import json
-import copy
 from .serialize import serialize_value_plain, _recurs_for_key
+
 
 def json_formatter(data):
     new_data = _recurs_for_key(data, '')

@@ -1,6 +1,3 @@
-from .serialize import _recurs_for_key
-
-
 def serialize_value_plain(value):
     if isinstance(value, bool):
         if value:
@@ -10,6 +7,7 @@ def serialize_value_plain(value):
     elif value is None:
         value = 'null'
     return value
+
 
 def stylish(data, deap=""):
     res = "{"
