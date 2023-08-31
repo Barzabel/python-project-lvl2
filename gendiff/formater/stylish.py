@@ -1,4 +1,7 @@
-def serialize_value_json(value):
+from .serialize import _recurs_for_key
+
+
+def serialize_value_plain(value):
     if isinstance(value, bool):
         if value:
             value = 'true'
@@ -8,7 +11,6 @@ def serialize_value_json(value):
         value = 'null'
     return value
 
-
 def stylish(data, deap=""):
     res = "{"
     for x in data:
@@ -16,7 +18,7 @@ def stylish(data, deap=""):
             new_deap = "    " + deap
             value = stylish(x["value"], new_deap)
         else:
-            value = serialize_value_json(x["value"])
+            value = serialize_value_plain(x["value"])
         if x["status"] == 0:
             res += "\n{}    {}: {}".format(deap, x['key'], value)
         elif x["status"] == 1:
