@@ -6,7 +6,7 @@ authors = ["Barzabel <kochenko1995@mail.ru>"]
 packages = [{include = "gendiff"}]
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.10.4"
+python = "3.9.13"
 pathlib = "^1.0.1"
 PyYAML = "^6.0.1"
 
