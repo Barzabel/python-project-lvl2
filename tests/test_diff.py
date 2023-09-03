@@ -39,7 +39,6 @@ def test_empty_result(result_json_empty):
 
 
 def test_json_within_json(result_within_json, result_within_plain, result_within_stylish):
-    res = generate_diff('tests/fixtures/file_deap1.json', 'tests/fixtures/file_deap2.json', "json")
     assert generate_diff('tests/fixtures/file_deap1.json', 'tests/fixtures/file_deap2.json', "json") == result_within_json
     assert generate_diff('tests/fixtures/file_deap1.json', 'tests/fixtures/file_deap2.json', "plain") == result_within_plain
     assert generate_diff('tests/fixtures/file_deap1.yml', 'tests/fixtures/file_deap2.yml') == result_within_stylish
