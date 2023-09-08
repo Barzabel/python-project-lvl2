@@ -1,0 +1,10 @@
+{
+    age: 35
+  + cat: true
+    children: true
+    firstName: Jane
+    hobbies: false
+  - lalala: 1
+  - lastName: Doe
+  + lastName: andr
+}
