@@ -15,19 +15,21 @@ def serialize_value_plain(value):
 
 
 def stylish(data, deap=""):
-    res = "{"
+    res = ["{"]
     for x in data:
+        line = ""
         if isinstance(x["value"], list):
             new_deap = "    " + deap
             value = stylish(x["value"], new_deap)
         else:
             value = serialize_value_plain(x["value"])
         if x["status"] == NOTCHANGE:
-            res += "\n{}    {}: {}".format(deap, x['key'], value)
+            line = "{}    {}: {}".format(deap, x['key'], value)
         elif x["status"] == ADDED:
-            res += "\n{}  + {}: {}".format(deap, x['key'], value)
+            line = "{}  + {}: {}".format(deap, x['key'], value)
         elif x["status"] == DELETED:
-            res += "\n{}  - {}: {}".format(deap, x['key'], value)
-    end = "\n" + deap + "}"
-    res += end
-    return res
+            line = "{}  - {}: {}".format(deap, x['key'], value)
+        res.append(line)
+    end = deap + "}"
+    res.append(end)
+    return "\n".join(res)
