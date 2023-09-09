@@ -3,7 +3,7 @@ ADDED = 1
 NOTCHANGE = 0
 
 
-def serialize_value_plain(value):
+def join_value_plain(value):
     if isinstance(value, bool):
         if value:
             value = 'true'
@@ -22,7 +22,7 @@ def stylish(data, deap=""):
             new_deap = "    " + deap
             value = stylish(x["value"], new_deap)
         else:
-            value = serialize_value_plain(x["value"])
+            value = join_value_plain(x["value"])
         if x["status"] == NOTCHANGE:
             line = "{}    {}: {}".format(deap, x['key'], value)
         elif x["status"] == ADDED:
