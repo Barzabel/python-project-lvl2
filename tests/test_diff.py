@@ -48,7 +48,7 @@ def get_data_from_file(path):
         ],
     ],
 )
-def test_stylish(prepared_files):
+def test_formats(prepared_files):
     file1_path, file2_path, result_render_path, answer_type = prepared_files
     result_render = get_data_from_file(result_render_path)
     assert result_render == generate_diff(
