@@ -1,3 +1,8 @@
+DELETED = -1
+ADDED = 1
+NOTCHANGE = 0
+
+
 def serialize_value_plain(value):
     if isinstance(value, bool):
         if value:
@@ -17,11 +22,11 @@ def stylish(data, deap=""):
             value = stylish(x["value"], new_deap)
         else:
             value = serialize_value_plain(x["value"])
-        if x["status"] == 0:
+        if x["status"] == NOTCHANGE:
             res += "\n{}    {}: {}".format(deap, x['key'], value)
-        elif x["status"] == 1:
+        elif x["status"] == ADDED:
             res += "\n{}  + {}: {}".format(deap, x['key'], value)
-        elif x["status"] == -1:
+        elif x["status"] == DELETED:
             res += "\n{}  - {}: {}".format(deap, x['key'], value)
     end = "\n" + deap + "}"
     res += end

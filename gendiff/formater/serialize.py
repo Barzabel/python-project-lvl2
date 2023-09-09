@@ -1,6 +1,9 @@
 import copy
 
 
+NOTCHANGE = 0
+
+
 def serialize_value_plain(value):
     if isinstance(value, bool):
         if value:
@@ -17,14 +20,14 @@ def serialize_value_plain(value):
 def _recurs_for_key(data, parent):
     new_data = []
     for x in data:
-        if isinstance(x["value"], list) and x['status'] == 0:
+        if isinstance(x["value"], list) and x['status'] == NOTCHANGE:
             if parent != '':
                 new_parent = "{}.{}".format(parent, x["key"])
             else:
                 new_parent = x["key"]
             for y in _recurs_for_key(x["value"], new_parent):
                 new_data.append(y)
-        elif isinstance(x["value"], list) and (x['status'] != 0):
+        elif isinstance(x["value"], list) and (x['status'] != NOTCHANGE):
             value = copy.copy(x)
             if parent != "":
                 value["key"] = "{}.{}".format(parent, x["key"])
