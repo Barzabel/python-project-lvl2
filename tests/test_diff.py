@@ -51,12 +51,6 @@ def get_data_from_file(path):
 def test_formats(prepared_files):
     file1_path, file2_path, result_render_path, answer_type = prepared_files
     result_render = get_data_from_file(result_render_path)
-    #print(result_render)
-    print(generate_diff(
-        file1_path,
-        file2_path,
-        answer_type
-    ))
     assert result_render == generate_diff(
         file1_path,
         file2_path,

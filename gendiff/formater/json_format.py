@@ -28,4 +28,4 @@ def json_formatter(data):
             new_data[x + 1]['status'] = None
         elif new_data[x]["status"] == DELETED:
             res.get("removed").append({key: value})
-    return json.dumps(res, indent=4) 
+    return json.dumps(res, indent=4)
