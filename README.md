@@ -6,7 +6,7 @@
 ----------------------------
 ### presentation of gendiff
 
-[![asciicast](https://asciinema.org/a/440531.png)](https://asciinema.org/a/440531)
+[![asciicast](https://asciinema.org/a/440529.png)](https://asciinema.org/a/440531)
 
 
 ### library work with nested structures
