@@ -8,7 +8,7 @@ def get_data_from_file(path):
     root, ext = os.path.splitext(path)
     with open(path, "r") as read_file:
         if ext == ".json":
-            return '{0}\n'.format(json.dumps(json.load(read_file), indent=4))
+            return json.dumps(json.load(read_file), indent=4)
         else:
             return read_file.read()
 
@@ -51,6 +51,12 @@ def get_data_from_file(path):
 def test_formats(prepared_files):
     file1_path, file2_path, result_render_path, answer_type = prepared_files
     result_render = get_data_from_file(result_render_path)
+    #print(result_render)
+    print(generate_diff(
+        file1_path,
+        file2_path,
+        answer_type
+    ))
     assert result_render == generate_diff(
         file1_path,
         file2_path,
