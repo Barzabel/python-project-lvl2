@@ -6,17 +6,17 @@
 ----------------------------
 ### presentation of gendiff
 
-[![asciicast](https://asciinema.org/a/440529.png)](https://asciinema.org/a/440531)
+[![asciicast](https://asciinema.org/a/440531.svg)](https://asciinema.org/a/440531)
 
 
 ### library work with nested structures
 
-[![asciicast](https://asciinema.org/a/441629.png)](https://asciinema.org/a/441629)
+[![asciicast](https://asciinema.org/a/441629.svg)](https://asciinema.org/a/441629)
 
 ### library work with different output formats
 
-[![asciicast](https://asciinema.org/a/442450.png)](https://asciinema.org/a/442450)
+[![asciicast](https://asciinema.org/a/442450.svg)](https://asciinema.org/a/442450)
 
 ### json output format
 
-[![asciicast](https://asciinema.org/a/443571.png)](https://asciinema.org/a/443571)
+[![asciicast](https://asciinema.org/a/443571.svg)](https://asciinema.org/a/443571)
