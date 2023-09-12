@@ -1,5 +1,5 @@
 import json
-from .serialize import serialize_value_plain, _recurs_for_key
+from .serialize import serialize_value, _recurs_for_key
 
 
 DELETED = -1
@@ -15,7 +15,7 @@ def json_formatter(data):
     }
 
     for x in range(len(new_data)):
-        value = serialize_value_plain(new_data[x]['value'])
+        value = serialize_value(new_data[x]['value'])
         status = new_data[x]["status"]
         key = new_data[x]['key']
         is_end = x < len(new_data) - 1
@@ -23,7 +23,7 @@ def json_formatter(data):
             key = new_data[x]['key']
             res.get("added").append({key: value})
         elif status == DELETED and is_end and key == new_data[x + 1]['key']:
-            v_next = serialize_value_plain(new_data[x + 1]['value'])
+            v_next = serialize_value(new_data[x + 1]['value'])
             res.get("updated_to").append({key: v_next})
             new_data[x + 1]['status'] = None
         elif new_data[x]["status"] == DELETED:

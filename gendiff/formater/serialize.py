@@ -4,7 +4,7 @@ import copy
 NOTCHANGE = 0
 
 
-def serialize_value_plain(value):
+def serialize_value(value):
     if isinstance(value, bool):
         value = str(value).lower()
     elif isinstance(value, str) and value != '[complex value]':
