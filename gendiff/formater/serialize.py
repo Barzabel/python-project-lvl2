@@ -6,10 +6,7 @@ NOTCHANGE = 0
 
 def serialize_value_plain(value):
     if isinstance(value, bool):
-        if value:
-            value = 'true'
-        else:
-            value = 'false'
+        value = str(value).lower()
     elif isinstance(value, str) and value != '[complex value]':
         value = "'{}'".format(value)
     elif value is None:

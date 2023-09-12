@@ -2,7 +2,7 @@
 ----------------------------
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Barzabel/python-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/Barzabel/python-project-lvl2/actions) [![all tests](https://github.com/Barzabel/python-project-lvl2/workflows/all_tests/badge.svg)](https://github.com/Barzabel/python-project-lvl2/actions) <a href="https://codeclimate.com/github/codeclimate/codeclimate/test_coverage"><img src="https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/test_coverage" /></a>
-----------------------------
+
  ## Instructions
 
 **Help Running :**
@@ -16,7 +16,7 @@
 **Running the script with the selection of the output format:** 
 
 `gendiff -f {stylish, plain, json} <file_path1> <file_path2>`
-----------------------------
+
 ### Examples
 
 [![asciicast](https://asciinema.org/a/440531.svg)](https://asciinema.org/a/440531)
