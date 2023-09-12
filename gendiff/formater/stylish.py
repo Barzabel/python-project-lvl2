@@ -5,10 +5,7 @@ NOTCHANGE = 0
 
 def join_value_plain(value):
     if isinstance(value, bool):
-        if value:
-            value = 'true'
-        else:
-            value = 'false'
+        value = str(value).lower()
     elif value is None:
         value = 'null'
     return value
