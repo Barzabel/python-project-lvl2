@@ -1,0 +1,13 @@
+*.egg-info
+__pycache__*
+*.pyc
+*.gz
+dict
+dist/*
+.DS_Store
+.venv/
+.coverage
+coverage.xml
+.pytest_cache/
+.vim
+.idea/

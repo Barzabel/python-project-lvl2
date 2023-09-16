@@ -1,0 +1,8 @@
+{
+    "firstName": "Jane",
+    "lastName": "andr",
+    "hobbies": false,
+    "age": 35,
+    "children": true,
+    "cat":true
+}

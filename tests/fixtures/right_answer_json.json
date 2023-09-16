@@ -1,0 +1,41 @@
+{
+    "added": [
+        {
+            "common.follow": "false"
+        },
+        {
+            "common.setting4": "'blah blah'"
+        },
+        {
+            "common.setting5": "[complex value]"
+        },
+        {
+            "common.setting6.ops": "'vops'"
+        },
+        {
+            "group3": "[complex value]"
+        }
+    ],
+    "updated_to": [
+        {
+            "common.setting3": "null"
+        },
+        {
+            "common.setting6.doge.wow": "'so much'"
+        },
+        {
+            "group1.baz": "'bars'"
+        },
+        {
+            "group1.nest": "'str'"
+        }
+    ],
+    "removed": [
+        {
+            "common.setting2": 200
+        },
+        {
+            "group2": "[complex value]"
+        }
+    ]
+}
