@@ -3,28 +3,31 @@ from .serialize import serialize_value, _recurs_for_key
 
 DELETED = -1
 ADDED = 1
+NOTCHANGE = 0
 
 
 def plain(data):
-    new_data = _recurs_for_key(data, '')
     result = []
-    for x in range(len(new_data)):
-        value = serialize_value(new_data[x]['value'])
-        status = new_data[x]["status"]
-        key = new_data[x]['key']
-        is_end = x < len(new_data) - 1
-        line = None
-        if new_data[x]["status"] == ADDED:
-            line = "Property '{}' was added with value: {}"
-            line = line.format(key, value)
-        elif status == DELETED and is_end and key == new_data[x + 1]['key']:
-            v_next = serialize_value(new_data[x + 1]['value'])
-            line = "Property '{}' was updated. From {} to {}"
-            line = line.format(key, value, v_next)
-            new_data[x + 1]['status'] = None
-        elif new_data[x]["status"] == DELETED:
-            line = "Property '{}' was removed".format(new_data[x]['key'])
+    old = None
+    for line in _recurs_for_key(data, ''):
+        value = serialize_value(line['value'])
+        status = line["status"]
+        key = line['key']
+        res_line = None
 
-        if line:
-            result.append(line)
+        if old is not None and old["key"] != key and old["status"] == DELETED:
+            res_line = "Property '{}' was removed".format(old["key"])
+            result.append(res_line)
+
+        if old is not None and old["key"] == key and old["status"] == DELETED:
+            v_ex = serialize_value(old['value'])
+            res_line = "Property '{}' was updated. From {} to {}"
+            res_line = res_line.format(key, v_ex, value)
+            result.append(res_line)
+
+        elif status == ADDED:
+            res_line = "Property '{}' was added with value: {}"
+            res_line = res_line.format(key, value)
+            result.append(res_line)
+        old = line
     return '\n'.join(result)

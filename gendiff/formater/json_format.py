@@ -1,31 +1,29 @@
 import json
 from .serialize import serialize_value, _recurs_for_key
 
-
 DELETED = -1
 ADDED = 1
+NOTCHANGE = 0
 
 
 def json_formatter(data):
-    new_data = _recurs_for_key(data, '')
     res = {
         "added": [],
         "updated_to": [],
         "removed": []
     }
+    old = None
+    for line in _recurs_for_key(data, ''):
+        value = serialize_value(line['value'])
+        status = line["status"]
+        key = line['key']
+        if old is not None and old["key"] != key and old["status"] == DELETED:
+            res.get("removed").append({old["key"]: old["value"]})
 
-    for x in range(len(new_data)):
-        value = serialize_value(new_data[x]['value'])
-        status = new_data[x]["status"]
-        key = new_data[x]['key']
-        is_end = x < len(new_data) - 1
-        if new_data[x]["status"] == ADDED:
-            key = new_data[x]['key']
+        if old is not None and old["key"] == key and old["status"] == DELETED:
+            res.get("updated_to").append({key: value})
+        elif status == ADDED:
             res.get("added").append({key: value})
-        elif status == DELETED and is_end and key == new_data[x + 1]['key']:
-            v_next = serialize_value(new_data[x + 1]['value'])
-            res.get("updated_to").append({key: v_next})
-            new_data[x + 1]['status'] = None
-        elif new_data[x]["status"] == DELETED:
-            res.get("removed").append({key: value})
+        old = line
+
     return json.dumps(res, indent=4)

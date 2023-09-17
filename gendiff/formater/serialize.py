@@ -15,24 +15,22 @@ def serialize_value(value):
 
 
 def _recurs_for_key(data, parent):
-    new_data = []
     for x in data:
         if isinstance(x["value"], list) and x['status'] == NOTCHANGE:
             if parent != '':
                 new_parent = "{}.{}".format(parent, x["key"])
             else:
                 new_parent = x["key"]
-            for y in _recurs_for_key(x["value"], new_parent):
-                new_data.append(y)
+            for children in _recurs_for_key(x["value"], new_parent):
+                yield children
         elif isinstance(x["value"], list) and (x['status'] != NOTCHANGE):
             value = copy.copy(x)
             if parent != "":
                 value["key"] = "{}.{}".format(parent, x["key"])
             value["value"] = '[complex value]'
-            new_data.append(value)
+            yield value
         else:
             value = copy.copy(x)
             if parent != "":
                 value["key"] = "{}.{}".format(parent, x["key"])
-            new_data.append(value)
-    return new_data
+            yield value
