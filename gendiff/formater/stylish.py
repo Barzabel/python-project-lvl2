@@ -17,7 +17,6 @@ def stylish(data, deap=""):
     res = ["{"]
     for x in data:
         line = ""
-        print(x)
         if NESTED in x["status"]:
             new_deap = "    " + deap
             value = stylish(x["value"], new_deap)
