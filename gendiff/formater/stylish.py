@@ -1,6 +1,8 @@
-DELETED = -1
-ADDED = 1
-NOTCHANGE = 0
+DELETED = "deleted"
+ADDED = "added"
+NESTED = ".nested"
+CHANGED = ".changed"
+UNCHANGED = "unchanged"
 
 
 def join_value_plain(value):
@@ -15,16 +17,17 @@ def stylish(data, deap=""):
     res = ["{"]
     for x in data:
         line = ""
-        if isinstance(x["value"], list):
+        print(x)
+        if NESTED in x["status"]:
             new_deap = "    " + deap
             value = stylish(x["value"], new_deap)
         else:
             value = join_value_plain(x["value"])
-        if x["status"] == NOTCHANGE:
+        if UNCHANGED in x["status"]:
             line = "{}    {}: {}".format(deap, x['key'], value)
-        elif x["status"] == ADDED:
+        elif ADDED in x["status"]:
             line = "{}  + {}: {}".format(deap, x['key'], value)
-        elif x["status"] == DELETED:
+        elif DELETED in x["status"]:
             line = "{}  - {}: {}".format(deap, x['key'], value)
         res.append(line)
     end = deap + "}"

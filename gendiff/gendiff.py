@@ -2,9 +2,11 @@ from .file_parser import get_dict_from_path
 from .formater.reformatting import reformatting
 
 
-DELETED = -1
-ADDED = 1
-NOTCHANGE = 0
+DELETED = "deleted"
+ADDED = "added"
+NESTED = ".nested"
+CHANGED = ".changed"
+UNCHANGED = "unchanged"
 
 
 def _get_dict(status, key, value):
@@ -23,32 +25,38 @@ def _rdiff(data1, data2):
     keys = list(keys)
     keys.sort()
     res = []
-    status = NOTCHANGE
-
     for key in keys:
+        status = ''
         value_diff = None
         if key not in data1:
-            status = ADDED
+            status += ADDED
+            if type(data2[key]) is dict or type(data2[key]) is list:
+                status += NESTED
             value_diff = data2[key]
         elif key not in data2:
-            status = DELETED
+            status += DELETED
+            if type(data1[key]) is dict or type(data1[key]) is list:
+                status += NESTED
+
             value_diff = data1[key]
         else:
-            status = NOTCHANGE
+            status = UNCHANGED
             value_diff = data1[key], data2[key]
-
-        if status == NOTCHANGE:
+        if status == UNCHANGED:
             if data1[key] == data2[key]:
-                res.append(_get_dict(status, key, _rdiff(*value_diff)))
+                res.append(_get_dict(
+                    status + NESTED if type(data1[key]) is dict else status,
+                    key,
+                    _rdiff(*value_diff)))
             elif type(data1[key]) is dict and type(data2[key]) is dict:
-                res.append(_get_dict(status, key, _rdiff(*value_diff)))
+                res.append(_get_dict(status + NESTED, key, _rdiff(*value_diff)))
             else:
                 res.append(_get_dict(
-                    DELETED,
+                    DELETED + NESTED if type(data1[key]) is dict else DELETED,
                     key,
                     _rdiff(data1[key], data1[key])))
                 res.append(_get_dict(
-                    ADDED,
+                    ADDED + NESTED if type(data2[key]) is dict else ADDED,
                     key,
                     _rdiff(data2[key], data2[key])))
         else:
@@ -63,5 +71,6 @@ def _rdiff(data1, data2):
 def generate_diff(path1, path2, formator="stylish"):
     data1 = get_dict_from_path(path1)
     data2 = get_dict_from_path(path2)
+
     dict_diff = _rdiff(data1, data2)
     return reformatting(dict_diff, formator)

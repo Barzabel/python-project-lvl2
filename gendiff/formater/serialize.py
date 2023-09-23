@@ -1,7 +1,11 @@
 import copy
 
 
-NOTCHANGE = 0
+DELETED = "deleted"
+ADDED = "added"
+NESTED = ".nested"
+CHANGED = ".changed"
+UNCHANGED = "unchanged"
 
 
 def serialize_value(value):
@@ -16,18 +20,19 @@ def serialize_value(value):
 
 def _recurs_for_key(data, parent):
     for x in data:
-        if isinstance(x["value"], list) and x['status'] == NOTCHANGE:
+        if NESTED in x['status'] and UNCHANGED in x['status']:
             if parent != '':
                 new_parent = "{}.{}".format(parent, x["key"])
             else:
                 new_parent = x["key"]
             for children in _recurs_for_key(x["value"], new_parent):
                 yield children
-        elif isinstance(x["value"], list) and (x['status'] != NOTCHANGE):
+        elif NESTED in x['status']:
             value = copy.copy(x)
             if parent != "":
                 value["key"] = "{}.{}".format(parent, x["key"])
             value["value"] = '[complex value]'
+            print(value)
             yield value
         else:
             value = copy.copy(x)
