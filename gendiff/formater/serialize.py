@@ -32,7 +32,6 @@ def _recurs_for_key(data, parent):
             if parent != "":
                 value["key"] = "{}.{}".format(parent, x["key"])
             value["value"] = '[complex value]'
-            print(value)
             yield value
         else:
             value = copy.copy(x)
