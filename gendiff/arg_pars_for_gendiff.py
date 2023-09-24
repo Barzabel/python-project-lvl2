@@ -14,5 +14,5 @@ class ArgparseForGendiff:
         return {
             'first_file': args.first_file,
             'second_file': args.first_file,
-            'formator': args.format.strip()
+            'formator': args.format
         }
