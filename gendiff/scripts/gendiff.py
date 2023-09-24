@@ -2,7 +2,7 @@ from gendiff.gendiff import generate_diff
 from gendiff.arg_pars_for_gendiff import ArgparseForGendiff
 
 
-args = ArgparseForGendiff()
+args = ArgparseForGendiff().get_args()
 
 
 def main():
