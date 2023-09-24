@@ -17,8 +17,16 @@ def _get_dict(status, key, value):
     }
 
 
+def _is_nested(value):
+    return NESTED if isinstance(value, dict) else ""
+
+
+def is_both_dict(value1, value2):
+    return isinstance(value1, dict) and isinstance(value2, dict)
+
+
 def _rdiff(data1, data2):
-    if type(data2) is not dict or type(data1) is not dict:
+    if not isinstance(data1, dict):
         return data1
 
     keys = set(data1.keys()) | set(data2.keys())
@@ -29,43 +37,33 @@ def _rdiff(data1, data2):
         status = ''
         value_diff = None
         if key not in data1:
-            status += ADDED
-            if type(data2[key]) is dict or type(data2[key]) is list:
-                status += NESTED
+            status += ADDED + _is_nested(data2[key])
             value_diff = data2[key]
+            res.append(_get_dict(status, key, _rdiff(value_diff, value_diff)))
         elif key not in data2:
-            status += DELETED
-            if type(data1[key]) is dict or type(data1[key]) is list:
-                status += NESTED
-
+            status += DELETED + _is_nested(data1[key])
             value_diff = data1[key]
+            res.append(_get_dict(status, key, _rdiff(value_diff, value_diff)))
         else:
             status = UNCHANGED
             value_diff = data1[key], data2[key]
 
-        if status == UNCHANGED:
-            if data1[key] == data2[key]:
+            both_dict = is_both_dict(data1[key], data2[key])
+            if data1[key] == data2[key] or both_dict:
                 res.append(_get_dict(
-                    status + NESTED if type(data1[key]) is dict else status,
+                    status + _is_nested(data1[key]) + _is_nested(data2[key]),
                     key,
                     _rdiff(*value_diff)))
-            elif type(data1[key]) is dict and type(data2[key]) is dict:
-                res.append(_get_dict(status + NESTED, key, _rdiff(*value_diff)))
+
             else:
                 res.append(_get_dict(
-                    DELETED + NESTED if type(data1[key]) is dict else DELETED,
+                    DELETED + _is_nested(data1[key]),
                     key,
                     _rdiff(data1[key], data1[key])))
                 res.append(_get_dict(
-                    ADDED + NESTED if type(data2[key]) is dict else ADDED,
+                    ADDED + _is_nested(data2[key]),
                     key,
                     _rdiff(data2[key], data2[key])))
-        else:
-            if type(value_diff) is dict:
-                res.append(
-                    _get_dict(status, key, _rdiff(value_diff, value_diff)))
-            else:
-                res.append(_get_dict(status, key, value_diff))
     return res
 
 

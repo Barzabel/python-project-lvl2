@@ -20,21 +20,19 @@ def serialize_value(value):
 
 def _recurs_for_key(data, parent):
     for x in data:
+        if parent != '':
+            new_parent = "{}.{}".format(parent, x["key"])
+        else:
+            new_parent = x["key"]
         if NESTED in x['status'] and UNCHANGED in x['status']:
-            if parent != '':
-                new_parent = "{}.{}".format(parent, x["key"])
-            else:
-                new_parent = x["key"]
             for children in _recurs_for_key(x["value"], new_parent):
                 yield children
         elif NESTED in x['status']:
             value = copy.copy(x)
-            if parent != "":
-                value["key"] = "{}.{}".format(parent, x["key"])
+            value["key"] = new_parent
             value["value"] = '[complex value]'
             yield value
         else:
             value = copy.copy(x)
-            if parent != "":
-                value["key"] = "{}.{}".format(parent, x["key"])
+            value["key"] = new_parent
             yield value
