@@ -1,5 +1,5 @@
 import json
-from .serialize import serialize_value, _recurs_for_key
+from .serialize import _recurs_for_key
 
 
 DELETED = "deleted"
@@ -7,6 +7,16 @@ ADDED = "added"
 NESTED = "nested"
 CHANGED = "changed"
 UNCHANGED = "unchanged"
+
+
+def serialize_value(value):
+    if isinstance(value, bool):
+        value = str(value).lower()
+    elif isinstance(value, str) and value != '[complex value]':
+        value = "'{}'".format(value)
+    elif value is None:
+        value = 'null'
+    return value
 
 
 def json_formatter(data):
