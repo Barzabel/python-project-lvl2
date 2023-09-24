@@ -1,5 +1,5 @@
 from .file_parser import get_dict_from_path
-from .formater.reformatting import reformatting
+from .formater.apply_format import apply_format
 
 
 DELETED = "deleted"
@@ -74,4 +74,4 @@ def generate_diff(first_file, second_file, formator="stylish"):
     data2 = get_dict_from_path(second_file)
 
     dict_diff = _rdiff(data1, data2)
-    return reformatting(dict_diff, formator)
+    return apply_format(dict_diff, formator)
