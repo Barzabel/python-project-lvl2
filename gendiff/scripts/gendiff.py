@@ -6,6 +6,7 @@ args = ArgparseForGendiff()
 
 
 def main():
+    print(*args.get_args().values())
     print(generate_diff(*args.get_args().values()))
 
 
