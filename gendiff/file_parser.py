@@ -8,8 +8,8 @@ def parse(data, format_file='json') -> dict:
         return json.load(data)
     elif format_file == 'yml' or format_file == 'yaml':
         return yaml.safe_load(data)
-    else:
-        raise Exception("invalid file format")
+
+    raise Exception("invalid file format")
 
 
 def get_dict_from_path(path):

@@ -42,6 +42,7 @@ def _rdiff(data1, data2):
         else:
             status = UNCHANGED
             value_diff = data1[key], data2[key]
+
         if status == UNCHANGED:
             if data1[key] == data2[key]:
                 res.append(_get_dict(
@@ -68,9 +69,9 @@ def _rdiff(data1, data2):
     return res
 
 
-def generate_diff(path1, path2, formator="stylish"):
-    data1 = get_dict_from_path(path1)
-    data2 = get_dict_from_path(path2)
+def generate_diff(first_file, second_file, formator="stylish"):
+    data1 = get_dict_from_path(first_file)
+    data2 = get_dict_from_path(second_file)
 
     dict_diff = _rdiff(data1, data2)
     return reformatting(dict_diff, formator)
