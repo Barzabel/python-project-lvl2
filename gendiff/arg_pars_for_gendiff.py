@@ -13,6 +13,6 @@ class ArgparseForGendiff:
         args = self.parser.parse_args()
         return {
             'first_file': args.first_file,
-            'second_file': args.first_file,
+            'second_file': args.second_file,
             'formator': args.format
         }
