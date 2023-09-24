@@ -4,8 +4,8 @@ from .formater.reformatting import reformatting
 
 DELETED = "deleted"
 ADDED = "added"
-NESTED = ".nested"
-CHANGED = ".changed"
+NESTED = "nested"
+CHANGED = "changed"
 UNCHANGED = "unchanged"
 
 

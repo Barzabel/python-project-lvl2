@@ -3,8 +3,8 @@ from .serialize import serialize_value, _recurs_for_key
 
 DELETED = "deleted"
 ADDED = "added"
-NESTED = ".nested"
-CHANGED = ".changed"
+NESTED = "nested"
+CHANGED = "changed"
 UNCHANGED = "unchanged"
 
 
