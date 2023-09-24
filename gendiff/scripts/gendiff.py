@@ -6,8 +6,8 @@ args = ArgparseForGendiff()
 
 
 def main():
-    print(*args.get_args().values())
-    print(generate_diff(*args.get_args().values()))
+    print(args['formator'])
+    print(generate_diff(args['first_file'], args['second_file'], args['formator'])
 
 
 if __name__ == '__main__':
