@@ -57,11 +57,11 @@ def _rdiff(data1, data2):
 
             else:
                 res.append(_get_dict(
-                    DELETED + _is_nested(data1[key]),
+                    DELETED + CHANGED + _is_nested(data1[key]),
                     key,
                     _rdiff(data1[key], data1[key])))
                 res.append(_get_dict(
-                    ADDED + _is_nested(data2[key]),
+                    ADDED + CHANGED + _is_nested(data2[key]),
                     key,
                     _rdiff(data2[key], data2[key])))
     return res
