@@ -24,6 +24,15 @@ def get_path(path, key):
         return key
 
 
+def get_old(status, key, value):
+    if CHANGED in status:
+        old = value
+        old['key'] = key
+    else:
+        old = None
+    return old
+
+
 def plain(data, path=""):
     result = []
     old = None
@@ -34,9 +43,7 @@ def plain(data, path=""):
             result.extend(plain(var["value"], new_path))
         value = serialize_value(var['value'], status)
         res_line = None
-        if old and old["key"] != new_path and DELETED in old["status"]:
-            res_line = "Property '{}' was removed".format(old["key"])
-            result.append(res_line)
+
         if old and old["key"] == new_path and DELETED in old["status"]:
             v_ex = serialize_value(old['value'], old["status"])
             res_line = "Property '{}' was updated. From {} to {}"
@@ -46,6 +53,8 @@ def plain(data, path=""):
             res_line = "Property '{}' was added with value: {}"
             res_line = res_line.format(new_path, value)
             result.append(res_line)
-        old = var
-        old['key'] = new_path
+        elif DELETED in status and CHANGED not in status:
+            res_line = "Property '{}' was removed".format(new_path)
+            result.append(res_line)
+        old = get_old(status, new_path, var)
     return result
