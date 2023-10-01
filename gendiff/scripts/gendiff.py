@@ -1,8 +1,8 @@
 from gendiff.gendiff import generate_diff
-from gendiff.arg_pars_for_gendiff import ArgparseForGendiff
+from gendiff.cli import get_args
 
 
-args = ArgparseForGendiff().get_args()
+args = get_args()
 
 
 def main():

@@ -5,8 +5,8 @@ CHANGED = "changed"
 UNCHANGED = "unchanged"
 
 
-def serialize_value(value, status):
-    if NESTED in status:
+def serialize_value(value):
+    if isinstance(value, list):
         return '[complex value]'
     if isinstance(value, bool):
         value = str(value).lower()
@@ -41,11 +41,11 @@ def plain(data, path=""):
         status = var["status"]
         if NESTED in status and UNCHANGED in status:
             result.extend(plain(var["value"], new_path))
-        value = serialize_value(var['value'], status)
+        value = serialize_value(var['value'])
         res_line = None
 
         if old and old["key"] == new_path and DELETED in old["status"]:
-            v_ex = serialize_value(old['value'], old["status"])
+            v_ex = serialize_value(old['value'])
             res_line = "Property '{}' was updated. From {} to {}"
             res_line = res_line.format(new_path, v_ex, value)
             result.append(res_line)

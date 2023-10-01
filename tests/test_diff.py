@@ -13,64 +13,60 @@ def get_data_from_file(path):
             return read_file.read()
 
 
+def get_path(name):
+    return 'tests/fixtures/{}'.format(name)
+
+
 @pytest.mark.parametrize(
-    argnames='prepared_files',
+    argnames='file1_path, file2_path, result_render_path, answer_type',
     argvalues=[
         [
-            'tests/fixtures/file_deap1.json',
-            'tests/fixtures/file_deap1.json',
-            'tests/fixtures/empty_json_format.json',
+            get_path('file_deap1.json'),
+            get_path('file_deap1.json'),
+            get_path('empty_json_format.json'),
             'json'
         ],
         [
-            'tests/fixtures/file_deap1.json',
-            'tests/fixtures/file_deap1.json',
-            'tests/fixtures/empty_plain_format',
+            get_path('file_deap1.json'),
+            get_path('file_deap1.json'),
+            get_path('empty_plain_format'),
             'plain'
         ],
         [
-            'tests/fixtures/file_deap1.json',
-            'tests/fixtures/file_deap2.json',
-            'tests/fixtures/right_answer_json.json',
+            get_path('file_deap1.json'),
+            get_path('file_deap2.json'),
+            get_path('right_answer_json.json'),
             'json'
         ],
         [
-            'tests/fixtures/file_deap1.json',
-            'tests/fixtures/file_deap2.json',
-            'tests/fixtures/right_answer_plain',
+            get_path('file_deap1.json'),
+            get_path('file_deap2.json'),
+            get_path('right_answer_plain'),
             'plain'
         ],
         [
-            'tests/fixtures/file_deap1.yml',
-            'tests/fixtures/file_deap2.yml',
-            'tests/fixtures/right_answer_stylish',
+            get_path('file_deap1.yml'),
+            get_path('file_deap2.yml'),
+            get_path('right_answer_stylish'),
             'stylish'
         ],
-
-
+        [
+            get_path('1.yaml'),
+            get_path('2.yml'),
+            get_path('right_answer_yml'),
+            'stylish'
+        ],
     ],
 )
-def test_formats(prepared_files):
-    file1_path, file2_path, result_render_path, answer_type = prepared_files
+def test_formats(file1_path, file2_path, result_render_path, answer_type):
     result_render = get_data_from_file(result_render_path)
     print(generate_diff(
         file1_path,
         file2_path,
         answer_type
     ))
-    print("____")
-    print(result_render)
     assert result_render == generate_diff(
         file1_path,
         file2_path,
         answer_type
     )
-
-
-@pytest.mark.parametrize(
-    argnames='test_input,expected',
-    argvalues=[(('tests/fixtures/1.yaml', 'tests/fixtures/2.yml'),
-                'tests/fixtures/right_answer_yml'), ],
-)
-def test_yaml(test_input, expected):
-    assert generate_diff(*test_input) == get_data_from_file(expected)
