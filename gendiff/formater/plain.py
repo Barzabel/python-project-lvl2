@@ -24,15 +24,6 @@ def get_path(path, key):
         return key
 
 
-def get_old(status, key, value):
-    if CHANGED in status:
-        old = value
-        old['key'] = key
-    else:
-        old = None
-    return old
-
-
 def plain(data, path=""):
     result = []
     old = None
@@ -56,5 +47,7 @@ def plain(data, path=""):
         elif DELETED in status and CHANGED not in status:
             res_line = "Property '{}' was removed".format(new_path)
             result.append(res_line)
-        old = get_old(status, new_path, var)
-    return result
+        if CHANGED in status:
+            old = var
+            old['key'] = new_path
+    return "\n".join(result) if path == "" else result
