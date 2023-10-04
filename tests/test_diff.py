@@ -16,6 +16,7 @@ def get_data_from_file(path):
 def get_path(name):
     return 'tests/fixtures/{}'.format(name)
 
+
 @pytest.mark.parametrize(
     argnames='file1_path, file2_path, result_render_path, answer_type',
     argvalues=[
@@ -56,7 +57,7 @@ def get_path(name):
             get_path('file_deap2.json'),
             get_path('right_answer_json.json'),
             'json'
-        ],
+        ]
     ],
 )
 def test_formats(file1_path, file2_path, result_render_path, answer_type):
