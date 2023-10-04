@@ -1,5 +1,4 @@
 import json
-import copy
 
 
 DELETED = "deleted"
@@ -10,52 +9,47 @@ UNCHANGED = "unchanged"
 
 
 def serialize_value(value):
+    if isinstance(value, list):
+        return '[complex value]'
     if isinstance(value, bool):
         value = str(value).lower()
-    elif isinstance(value, str) and value != '[complex value]':
+    elif isinstance(value, str):
         value = "'{}'".format(value)
     elif value is None:
         value = 'null'
     return value
 
 
-def _recurs_for_key(data, parent):
-    for x in data:
-        if parent != '':
-            new_parent = "{}.{}".format(parent, x["key"])
-        else:
-            new_parent = x["key"]
-        if NESTED in x['status'] and UNCHANGED in x['status']:
-            for children in _recurs_for_key(x["value"], new_parent):
-                yield children
-        elif NESTED in x['status']:
-            value = copy.copy(x)
-            value["key"] = new_parent
-            value["value"] = '[complex value]'
-            yield value
-        else:
-            value = copy.copy(x)
-            value["key"] = new_parent
-            yield value
+def get_parent(parent, key):
+    if parent != '':
+        return "{}.{}".format(parent, key)
+    else:
+        return key
 
 
-def json_formatter(data):
+def json_formatter(data): # noqa C901
     res = {
         "added": [],
         "updated_to": [],
         "removed": []
     }
-    old = None
-    for line in _recurs_for_key(data, ''):
-        value = serialize_value(line['value'])
-        status = line["status"]
-        key = line['key']
-        if old is not None and old["key"] != key and DELETED in old["status"]:
-            res.get("removed").append({old["key"]: old["value"]})
 
-        if old is not None and old["key"] == key and DELETED in old["status"]:
-            res.get("updated_to").append({key: value})
-        elif ADDED in status:
-            res.get("added").append({key: value})
-        old = line
+    def wolk(data, parent=''):
+        first_cahnged = True
+        for x in data:
+            new_parent = get_parent(parent, x["key"])
+            if x['status'] == NESTED:
+                wolk(x["value"], new_parent)
+            value = serialize_value(x["value"])
+            if x['status'] == CHANGED:
+                if first_cahnged:
+                    first_cahnged = False
+                else:
+                    res.get("updated_to").append({new_parent: value})
+                    first_cahnged = True
+            elif x['status'] == DELETED:
+                res.get("removed").append({new_parent: value})
+            elif x['status'] == ADDED:
+                res.get("added").append({new_parent: value})
+    wolk(data)
     return json.dumps(res, indent=4)

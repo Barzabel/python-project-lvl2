@@ -37,31 +37,34 @@ def _rdiff(data1, data2):
         status = ''
         value_diff = None
         if key not in data1:
-            status += ADDED + _is_nested(data2[key])
+            status = ADDED
             value_diff = data2[key]
             res.append(_get_dict(status, key, _rdiff(value_diff, value_diff)))
         elif key not in data2:
-            status += DELETED + _is_nested(data1[key])
+            status = DELETED
             value_diff = data1[key]
             res.append(_get_dict(status, key, _rdiff(value_diff, value_diff)))
         else:
-            status = UNCHANGED
             value_diff = data1[key], data2[key]
 
             both_dict = is_both_dict(data1[key], data2[key])
-            if data1[key] == data2[key] or both_dict:
+            if both_dict:
                 res.append(_get_dict(
-                    status + _is_nested(data1[key]) + _is_nested(data2[key]),
+                    NESTED,
                     key,
                     _rdiff(*value_diff)))
-
+            elif data1[key] == data2[key]:
+                res.append(_get_dict(
+                    UNCHANGED,
+                    key,
+                    _rdiff(*value_diff)))
             else:
                 res.append(_get_dict(
-                    DELETED + CHANGED + _is_nested(data1[key]),
+                    CHANGED,
                     key,
                     _rdiff(data1[key], data1[key])))
                 res.append(_get_dict(
-                    ADDED + CHANGED + _is_nested(data2[key]),
+                    CHANGED,
                     key,
                     _rdiff(data2[key], data2[key])))
     return res

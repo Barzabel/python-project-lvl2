@@ -13,27 +13,36 @@ def join_value_stylish(value):
     return value
 
 
-def get_line_str(status, key, value, deap):
+def get_next_node(status, key, value, deap):
     line = ""
-    if UNCHANGED in status:
-        line = "{}    {}: {}".format(deap, key, value)
-    elif ADDED in status:
-        line = "{}  + {}: {}".format(deap, key, value)
-    elif DELETED in status:
-        line = "{}  - {}: {}".format(deap, key, value)
-    return line
+    new_deap = "    " + deap
+    if UNCHANGED == status or NESTED == status:
+        line = "{}    {}: {}"
+    elif ADDED == status:
+        line = "{}  + {}: {}"
+    elif DELETED == status:
+        line = "{}  - {}: {}"
+    return line.format(deap, key, stylish(value, new_deap))
 
 
 def stylish(data, deap=""):
+    if isinstance(data, str | int):
+        return data
     res = ["{"]
+    first_cahnged = True
     for x in data:
-        if NESTED in x["status"]:
-            new_deap = "    " + deap
-            value = stylish(x["value"], new_deap)
+        value = join_value_stylish(x["value"])
+        if x["status"] == CHANGED:
+            if first_cahnged:
+                line = get_next_node(DELETED, x['key'], value, deap)
+                first_cahnged = False
+            else:
+                line = get_next_node(ADDED, x['key'], value, deap)
+                first_cahnged = True
         else:
-            value = join_value_stylish(x["value"])
-        line = get_line_str(x["status"], x['key'], value, deap)
+            line = get_next_node(x["status"], x['key'], value, deap)
         res.append(line)
+
     end = deap + "}"
     res.append(end)
     return "\n".join(res)

@@ -30,24 +30,26 @@ def plain(data, path=""):
     for var in data:
         new_path = get_path(path, var["key"])
         status = var["status"]
-        if NESTED in status and UNCHANGED in status:
-            result.extend(plain(var["value"], new_path))
         value = serialize_value(var['value'])
         res_line = None
 
-        if old and old["key"] == new_path and DELETED in old["status"]:
+        if old and old["key"] == new_path:
             v_ex = serialize_value(old['value'])
             res_line = "Property '{}' was updated. From {} to {}"
             res_line = res_line.format(new_path, v_ex, value)
             result.append(res_line)
-        elif ADDED in status:
+            old = None
+        elif ADDED == status:
             res_line = "Property '{}' was added with value: {}"
             res_line = res_line.format(new_path, value)
             result.append(res_line)
-        elif DELETED in status and CHANGED not in status:
+        elif DELETED == status:
             res_line = "Property '{}' was removed".format(new_path)
             result.append(res_line)
-        if CHANGED in status:
+        if CHANGED == status:
             old = var
             old['key'] = new_path
+        if NESTED == status:
+            print(var["value"])
+            result.extend(plain(var["value"], new_path))
     return "\n".join(result) if path == "" else result
