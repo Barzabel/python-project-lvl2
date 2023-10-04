@@ -50,6 +50,5 @@ def plain(data, path=""):
             old = var
             old['key'] = new_path
         if NESTED == status:
-            print(var["value"])
             result.extend(plain(var["value"], new_path))
     return "\n".join(result) if path == "" else result
