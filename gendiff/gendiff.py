@@ -17,14 +17,6 @@ def _get_dict(status, key, value):
     }
 
 
-def _is_nested(value):
-    return NESTED if isinstance(value, dict) else ""
-
-
-def is_both_dict(value1, value2):
-    return isinstance(value1, dict) and isinstance(value2, dict)
-
-
 def _rdiff(data1, data2):
     if not isinstance(data1, dict):
         return data1
@@ -47,8 +39,7 @@ def _rdiff(data1, data2):
         else:
             value_diff = data1[key], data2[key]
 
-            both_dict = is_both_dict(data1[key], data2[key])
-            if both_dict:
+            if isinstance(data1[key], dict) and isinstance(data2[key], dict):
                 res.append(_get_dict(
                     NESTED,
                     key,

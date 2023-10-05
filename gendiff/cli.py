@@ -7,9 +7,4 @@ def get_args():
     parser.add_argument('second_file', type=str)
     parser.add_argument('-f', '--format', default="stylish", help="-f FORMAT, \
     --format FORMAT set format of output")
-    args = parser.parse_args()
-    return {
-        'first_file': args.first_file,
-        'second_file': args.second_file,
-        'formator': args.format
-    }
+    return parser.parse_args()
