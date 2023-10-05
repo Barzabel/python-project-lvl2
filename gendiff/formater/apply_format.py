@@ -3,11 +3,11 @@ from .stylish import stylish
 from .json_format import json_formatter
 
 
-def apply_format(data, formator):
-    if formator == 'stylish':
+def apply_format(data, format):
+    if format == 'stylish':
         return stylish(data)
-    elif formator == 'plain':
+    elif format == 'plain':
         return plain(data)
-    elif formator == 'json':
+    elif format == 'json':
         return json_formatter(data)
     raise Exception("invalid format")

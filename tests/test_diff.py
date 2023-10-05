@@ -8,7 +8,7 @@ def get_data_from_file(path):
     root, ext = os.path.splitext(path)
     with open(path, "r") as read_file:
         if ext == ".json":
-            return json.dumps(json.load(read_file), indent=4)
+            return json.dumps(json.load(read_file))
         else:
             return read_file.read()
 

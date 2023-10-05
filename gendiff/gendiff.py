@@ -9,11 +9,12 @@ CHANGED = "changed"
 UNCHANGED = "unchanged"
 
 
-def _get_dict(status, key, value):
+def _get_dict(status, key, value, old_value=None):
     return {
         "status": status,
         "key": key,
-        "value": value
+        "value": value,
+        "old_value": old_value
     }
 
 
@@ -53,11 +54,8 @@ def _rdiff(data1, data2):
                 res.append(_get_dict(
                     CHANGED,
                     key,
+                    _rdiff(data2[key], data2[key]),
                     _rdiff(data1[key], data1[key])))
-                res.append(_get_dict(
-                    CHANGED,
-                    key,
-                    _rdiff(data2[key], data2[key])))
     return res
 
 

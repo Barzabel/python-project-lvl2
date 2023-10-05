@@ -13,36 +13,40 @@ def join_value_stylish(value):
     return value
 
 
-def get_next_node(status, key, value, deap):
-    line = ""
-    new_deap = "    " + deap
-    if UNCHANGED == status or NESTED == status:
-        line = "{}    {}: {}"
-    elif ADDED == status:
-        line = "{}  + {}: {}"
-    elif DELETED == status:
-        line = "{}  - {}: {}"
-    return line.format(deap, key, stylish(value, new_deap))
-
-
 def stylish(data, deap=""):
     if isinstance(data, str | int):
         return data
     res = ["{"]
-    first_cahnged = True
     for x in data:
+        status = x["status"]
+        key = x['key']
         value = join_value_stylish(x["value"])
-        if x["status"] == CHANGED:
-            if first_cahnged:
-                line = get_next_node(DELETED, x['key'], value, deap)
-                first_cahnged = False
-            else:
-                line = get_next_node(ADDED, x['key'], value, deap)
-                first_cahnged = True
-        else:
-            line = get_next_node(x["status"], x['key'], value, deap)
-        res.append(line)
-
+        new_deap = "    " + deap
+        if status == UNCHANGED or status == NESTED:
+            res.append("{}    {}: {}".format(
+                deap,
+                key,
+                stylish(value, new_deap)))
+        elif status == CHANGED:
+            old_value = join_value_stylish(x["old_value"])
+            res.append("{}  - {}: {}".format(
+                deap,
+                key,
+                stylish(old_value, new_deap)))
+            res.append("{}  + {}: {}".format(
+                deap,
+                key,
+                stylish(value, new_deap)))
+        elif ADDED == status:
+            res.append("{}  + {}: {}".format(
+                deap,
+                key,
+                stylish(value, new_deap)))
+        elif DELETED == status:
+            res.append("{}  - {}: {}".format(
+                deap,
+                key,
+                stylish(value, new_deap)))
     end = deap + "}"
     res.append(end)
     return "\n".join(res)
