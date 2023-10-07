@@ -26,6 +26,7 @@ def get_path(path, key):
 
 def plain(data):
     result = []
+
     def wolk(data, path=""):
         for var in data:
             new_path = get_path(path, var["key"])
